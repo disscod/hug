@@ -25,4 +25,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: future13800/hugergo
+          tags: future13800/huhuergo
