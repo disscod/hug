@@ -6,8 +6,8 @@ const UUID = process.env.UUID || 'eda65564-d73c-4bd3-99b2-6b745274562a'; //若�
 const NEZHA_SERVER = process.env.NEZHA_SERVER || 'nz.abc.cn';     
 const NEZHA_PORT = process.env.NEZHA_PORT || '5555';                     // 哪吒端口为{443,8443,2096,2087,2083,2053}其中之一开启tls
 const NEZHA_KEY = process.env.NEZHA_KEY || '';
-const ARGO_DOMAIN = process.env.ARGO_DOMAIN || 'hugg.future13800.eu.org';                       // 仅能使用token，argo端口8080，cf后台设置需对应
-const ARGO_AUTH = process.env.ARGO_AUTH || 'eyJhIjoiNjc0MmMxNDI5ZDE4OTA3NjMzZjMyZjQ2MWM5MzUwOWMiLCJ0IjoiNWNkYmIyMDgtNTAyMy00NzQwLTk0MjUtM2JhYjUyOWMxMTkwIiwicyI6IlkyUTNNR1UzWVRNdFltVTJZaTAwT0dGa0xUaGpNVGt0WW1SaVptRTVPV0ZsTjJObSJ9';
+const ERGO_SERVER = process.env.ERGO_SERVER || 'hugg.future13800.eu.org';                       // 仅能使用token，argo端口8080，cf后台设置需对应
+const ERGO_TECH = process.env.ERGO_TECH || 'eyJhIjoiNjc0MmMxNDI5ZDE4OTA3NjMzZjMyZjQ2MWM5MzUwOWMiLCJ0IjoiNWNkYmIyMDgtNTAyMy00NzQwLTk0MjUtM2JhYjUyOWMxMTkwIiwicyI6IlkyUTNNR1UzWVRNdFltVTJZaTAwT0dGa0xUaGpNVGt0WW1SaVptRTVPV0ZsTjJObSJ9';
 const CFIP = process.env.CFIP || 'government.se';
 const NAME = process.env.NAME || 'hug';
 
@@ -24,10 +24,10 @@ const ISP = metaInfo.trim();
 
 // sub subscription
 app.get('/sub', (req, res) => {
-  const VMESS = { v: '2', ps: `${NAME}-${ISP}`, add: CFIP, port: '443', id: UUID, aid: '0', scy: 'none', net: 'ws', type: 'none', host: ARGO_DOMAIN, path: '/vmess?ed=2048', tls: 'tls', sni: ARGO_DOMAIN, alpn: '' };
-  const vlessURL = `vless://${UUID}@${CFIP}:443?encryption=none&security=tls&sni=${ARGO_DOMAIN}&type=ws&host=${ARGO_DOMAIN}&path=%2Fvless%3Fed%3D2048#${NAME}-${ISP}`;
+  const VMESS = { v: '2', ps: `${NAME}-${ISP}`, add: CFIP, port: '443', id: UUID, aid: '0', scy: 'none', net: 'ws', type: 'none', host: ERGO_SERVER, path: '/vmess?ed=2048', tls: 'tls', sni: ERGO_SERVER, alpn: '' };
+  const vlessURL = `vless://${UUID}@${CFIP}:443?encryption=none&security=tls&sni=${ERGO_SERVER}&type=ws&host=${ERGO_SERVER}&path=%2Fvless%3Fed%3D2048#${NAME}-${ISP}`;
   const vmessURL = `vmess://${Buffer.from(JSON.stringify(VMESS)).toString('base64')}`;
-  const trojanURL = `trojan://${UUID}@${CFIP}:443?security=tls&sni=${ARGO_DOMAIN}&type=ws&host=${ARGO_DOMAIN}&path=%2Ftrojan%3Fed%3D2048#${NAME}-${ISP}`;
+  const trojanURL = `trojan://${UUID}@${CFIP}:443?security=tls&sni=${ERGO_SERVER}&type=ws&host=${ERGO_SERVER}&path=%2Ftrojan%3Fed%3D2048#${NAME}-${ISP}`;
   
   const base64Content = Buffer.from(`${vlessURL}\n\n${vmessURL}\n\n${trojanURL}`).toString('base64');
 
@@ -79,7 +79,7 @@ function runWeb() {
 // run-server
 function runServer() {
 
-  const command2 = `nohup ./bot tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ARGO_AUTH} >/dev/null 2>&1 &`;
+  const command2 = `nohup ./bot tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
 
   exec(command2, (error) => {
     if (error) {
