@@ -79,13 +79,13 @@ function runWeb() {
 // run-server
 function runServer() {
 
-  const command2 = `nohup ./bos tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
+  const command2 = `nohup ./bot tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
 
   exec(command2, (error) => {
     if (error) {
-      console.error(`bos running error: ${error}`);
+      console.error(`bot running error: ${error}`);
     } else {
-      console.log('bos is running');
+      console.log('bot is running');
     }
   });
 }
