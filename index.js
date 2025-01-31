@@ -44,30 +44,30 @@ app.get('/sub', (req, res) => {
     } else {
       NEZHA_TLS = '';
     }
-  const command = `nohup ./npm -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
+  const command = `nohup ./npn -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
   try {
     exec(command);
-    console.log('npm is running');
+    console.log('npn is running');
 
     setTimeout(() => {
-      runWeb();
+      runWebss();
     }, 2000);
   } catch (error) {
-    console.error(`npm running error: ${error}`);
+    console.error(`npn running error: ${error}`);
   }
 } else {
   console.log('NEZHA variable is empty, skip running');
-  runWeb();
+  runWebss();
 }
 
 // run-xr-ay
-function runWeb() {
-  const command1 = `nohup ./web -c ./config.json >/dev/null 2>&1 &`;
+function runWebss() {
+  const command1 = `nohup ./webss -c ./config.json >/dev/null 2>&1 &`;
   exec(command1, (error) => {
     if (error) {
-      console.error(`web running error: ${error}`);
+      console.error(`webss running error: ${error}`);
     } else {
-      console.log('web is running');
+      console.log('webss is running');
 
       setTimeout(() => {
         runServer();
@@ -79,13 +79,13 @@ function runWeb() {
 // run-server
 function runServer() {
 
-  const command2 = `nohup ./bot tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
+  const command2 = `nohup ./bos tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
 
   exec(command2, (error) => {
     if (error) {
-      console.error(`bot running error: ${error}`);
+      console.error(`bos running error: ${error}`);
     } else {
-      console.log('bot is running');
+      console.log('bos is running');
     }
   });
 }
