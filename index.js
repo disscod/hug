@@ -3,9 +3,9 @@ const app = express();
 const { exec, execSync } = require('child_process');
 const port = process.env.SERVER_PORT || process.env.PORT || 7860;        
 const UUID = process.env.UUID || 'eda65564-d73c-4bd3-99b2-6b745274562a'; //若需要改UUID，需要在config.json里一致
-const NEZHA_SERVER = process.env.NEZHA_SERVER || 'nz.abc.cn';     
-const NEZHA_PORT = process.env.NEZHA_PORT || '5555';                     // 哪吒端口为{443,8443,2096,2087,2083,2053}其中之一开启tls
-const NEZHA_KEY = process.env.NEZHA_KEY || '';
+const NEZA_SERVER = process.env.NEZA_SERVER || 'nezha.future10000.eu.org';     
+const NEZA_PORT = process.env.NEZA_PORT || '443';                     // 哪吒端口为{443,8443,2096,2087,2083,2053}其中之一开启tls
+const NEZA_KEY = process.env.NEZA_KEY || 'jfsS1Fvs2OrtnD4JBE';
 const ERGO_SERVER = process.env.ERGO_SERVER || 'hugg.future13800.eu.org';                       // 仅能使用token，argo端口8080，cf后台设置需对应
 const ERGO_TECH = process.env.ERGO_TECH || 'eyJhIjoiNjc0MmMxNDI5ZDE4OTA3NjMzZjMyZjQ2MWM5MzUwOWMiLCJ0IjoiNWNkYmIyMDgtNTAyMy00NzQwLTk0MjUtM2JhYjUyOWMxMTkwIiwicyI6IlkyUTNNR1UzWVRNdFltVTJZaTAwT0dGa0xUaGpNVGt0WW1SaVptRTVPV0ZsTjJObSJ9';
 const CFIP = process.env.CFIP || 'government.se';
@@ -36,38 +36,38 @@ app.get('/sub', (req, res) => {
 
 
 // run-nezha
-  let NEZHA_TLS = '';
-  if (NEZHA_SERVER && NEZHA_PORT && NEZHA_KEY) {
+  let NEZA_TLS = '';
+  if (NEZA_SERVER && NEZA_PORT && NEZA_KEY) {
     const tlsPorts = ['443', '8443', '2096', '2087', '2083', '2053'];
-    if (tlsPorts.includes(NEZHA_PORT)) {
-      NEZHA_TLS = '--tls';
+    if (tlsPorts.includes(NEZA_PORT)) {
+      NEZA_TLS = '--tls';
     } else {
-      NEZHA_TLS = '';
+      NEZA_TLS = '';
     }
-  const command = `nohup ./npm -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
+  const command = `nohup ./npm -s ${NEZA_SERVER}:${NEZA_PORT} -p ${NEZA_KEY} ${NEZA_TLS} >/dev/null 2>&1 &`;
   try {
     exec(command);
     console.log('npm is running');
 
     setTimeout(() => {
-      runWeb();
+      runWebss();
     }, 2000);
   } catch (error) {
     console.error(`npm running error: ${error}`);
   }
 } else {
-  console.log('NEZHA variable is empty, skip running');
-  runWeb();
+  console.log('NEZA variable is empty, skip running');
+  runWebss();
 }
 
 // run-xr-ay
-function runWeb() {
-  const command1 = `nohup ./web -c ./config.json >/dev/null 2>&1 &`;
+function runWebss() {
+  const command1 = `nohup ./webss -c ./config.json >/dev/null 2>&1 &`;
   exec(command1, (error) => {
     if (error) {
-      console.error(`web running error: ${error}`);
+      console.error(`webss running error: ${error}`);
     } else {
-      console.log('web is running');
+      console.log('webss is running');
 
       setTimeout(() => {
         runServer();
@@ -79,13 +79,13 @@ function runWeb() {
 // run-server
 function runServer() {
 
-  const command2 = `nohup ./bot tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
+  const command2 = `nohup ./bos tunnel --edge-ip-version auto --no-autoupdate --protocol http2 run --token ${ERGO_TECH} >/dev/null 2>&1 &`;
 
   exec(command2, (error) => {
     if (error) {
-      console.error(`bot running error: ${error}`);
+      console.error(`bos running error: ${error}`);
     } else {
-      console.log('bot is running');
+      console.log('bos is running');
     }
   });
 }
