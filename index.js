@@ -50,24 +50,24 @@ app.get('/sub', (req, res) => {
     console.log('npm is running');
 
     setTimeout(() => {
-      runWebss();
+      runWeb();
     }, 2000);
   } catch (error) {
     console.error(`npm running error: ${error}`);
   }
 } else {
   console.log('NEZHA variable is empty, skip running');
-  runWebss();
+  runWeb();
 }
 
 // run-xr-ay
-function runWebss() {
-  const command1 = `nohup ./webss -c ./config.json >/dev/null 2>&1 &`;
+function runWeb() {
+  const command1 = `nohup ./web -c ./config.json >/dev/null 2>&1 &`;
   exec(command1, (error) => {
     if (error) {
-      console.error(`webss running error: ${error}`);
+      console.error(`web running error: ${error}`);
     } else {
-      console.log('webss is running');
+      console.log('web is running');
 
       setTimeout(() => {
         runServer();
