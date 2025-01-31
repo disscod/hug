@@ -44,16 +44,16 @@ app.get('/sub', (req, res) => {
     } else {
       NEZHA_TLS = '';
     }
-  const command = `nohup ./npn -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
+  const command = `nohup ./npm -s ${NEZHA_SERVER}:${NEZHA_PORT} -p ${NEZHA_KEY} ${NEZHA_TLS} >/dev/null 2>&1 &`;
   try {
     exec(command);
-    console.log('npn is running');
+    console.log('npm is running');
 
     setTimeout(() => {
       runWebss();
     }, 2000);
   } catch (error) {
-    console.error(`npn running error: ${error}`);
+    console.error(`npm running error: ${error}`);
   }
 } else {
   console.log('NEZHA variable is empty, skip running');
